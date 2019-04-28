@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,13 +14,9 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
 
-//import cesi.com.tchatapp.helper.NetworkHelper;
-//import cesi.com.tchatapp.model.HttpResult;
-//import cesi.com.tchatapp.utils.Constants;
 
 //Inscription d'un utilisateur
 public class SignupActivity extends Activity {
-
     EditText username;
     EditText pwd;
     ProgressBar pg;
@@ -55,9 +50,7 @@ public class SignupActivity extends Activity {
         }
     }
 
-    /**
-     * AsyncTask for sign-in
-     */
+    //Appels asynchrones pour l'enregistrement d'un compte
     protected class SignupAsyncTask extends AsyncTask<String, Void, Integer> {
 
         Context context;
@@ -73,7 +66,6 @@ public class SignupActivity extends Activity {
             }
 
             try {
-
                 Map<String, String> p = new HashMap<>();
                 p.put("username", params[0]);
                 p.put("pwd", params[1]);
@@ -82,7 +74,7 @@ public class SignupActivity extends Activity {
 
                 return result.code;
             } catch (Exception e){
-                Log.d("CesiApp", "Error occured in your AsyncTask : ", e);
+                Log.d("CesiApp", "Erreur dans l'AsyncTask : ", e);
                 return 500;
             }
         }

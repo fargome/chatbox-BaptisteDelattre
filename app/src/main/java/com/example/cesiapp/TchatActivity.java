@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-//import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,31 +15,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//import cesi.com.tchatapp.adapter.MessagesAdapter;
-//import cesi.com.tchatapp.helper.JsonParser;
-//import cesi.com.tchatapp.helper.NetworkHelper;
-//import cesi.com.tchatapp.model.HttpResult;
-//import cesi.com.tchatapp.model.Message;
-//import cesi.com.tchatapp.utils.Constants;
-
-
-//Permet
+//Récupéré et retravaillé depuis le cours originel sur github (android courses, partie 2bis)
 public class TchatActivity extends Activity {
 
+    //Instanciation
     ListView listView;
     MessagesAdapter adapter;
     EditText msg;
-
     String token;
-    //private SwipeRefreshLayout swipeRefreshLayout;
     Timer timer;
     TimerTask task = new TimerTask() {
         @Override
@@ -53,25 +41,27 @@ public class TchatActivity extends Activity {
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_tchat);
+        //Résupération du token vie l'intent
         token = this.getIntent().getExtras().getString("CesiApp");
         if(token == null){
+            //Affichage d'un message d'erreur à l'utilsateur
             Toast.makeText(this, this.getString(R.string.error_no_token), Toast.LENGTH_SHORT).show();
             finish();
         }
-        //swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        //Récupère la vue
         listView = (ListView) findViewById(R.id.tchat_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"horacio.gonzales@gmail.com"});
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"baptiste.del.13@gmail.com"});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Android");
                 intent.putExtra(Intent.EXTRA_TEXT, adapter.getItem(position).getMsg());
                 intent.setType("text/plain");
 
                 //Intent create chooser, creates a popin that displays available apps.
                 // Second param is this popin title
-                startActivity(Intent.createChooser(intent, "Send Email"));
+                startActivity(Intent.createChooser(intent, "Envoi de l'email"));
             }
         });
         msg = (EditText) findViewById(R.id.tchat_msg);
@@ -79,7 +69,7 @@ public class TchatActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if(msg.getText().toString().isEmpty()){
-                    msg.setText("Please add a message");
+                    msg.setText("Ajouter un message");
                     return;
                 }
                 new SendMessageAsyncTask().execute(msg.getText().toString());
@@ -87,22 +77,12 @@ public class TchatActivity extends Activity {
             }
         });
 
-
         adapter = new MessagesAdapter(this);
         listView.setAdapter(adapter);
-
-        /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refresh();
-            }
-        });
-        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);*/
     }
 
     private void refresh() {
         new GetMessagesAsyncTask(this).execute();
-        //  swipeRefreshLayout.setRefreshing(true);
     }
 
 
@@ -217,7 +197,7 @@ public class TchatActivity extends Activity {
             if(msgs != null){
                 nb = msgs.size();
             }
-            Toast.makeText(TchatActivity.this, "loaded nb messages: "+nb, Toast.LENGTH_LONG).show();
+            Toast.makeText(TchatActivity.this, "Nombre de messages chargés : "+nb, Toast.LENGTH_LONG).show();
             adapter.addMessage(msgs);
         }
     }

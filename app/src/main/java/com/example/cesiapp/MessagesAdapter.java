@@ -1,8 +1,5 @@
 package com.example.cesiapp;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,14 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.example.cesiapp.R;
-//import cesi.com.tchatapp.helper.DateHelper;
-//import cesi.com.tchatapp.model.Message;
+
 
 /**
  * Created by sca on 02/06/15.
@@ -60,9 +54,10 @@ public class MessagesAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if(convertView==null){
-            // inflate the layout
+            //On "inflate" le layout
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.item_message, parent, false);
+            //Création du viewholder
             vh = new ViewHolder();
             vh.username = (TextView) convertView.findViewById(R.id.msg_user);
             vh.message = (TextView) convertView.findViewById(R.id.msg_message);
@@ -71,19 +66,15 @@ public class MessagesAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
+        //Affection des valeurs récupérées
         vh.username.setText(messages.get(position).getUsername());
         vh.message.setText(messages.get(position).getMsg());
-        //On le met dans un try/catch vu que les dates merdent souvent mais là ça ne marche pas
-        //try {
-            vh.date.setText(DateHelper.getFormattedDate(messages.get(position).getDate()));
-        //} catch (ParseException e) {
-            //e.printStackTrace();
-        //}
+        vh.date.setText(DateHelper.getFormattedDate(messages.get(position).getDate()));
 
         return convertView;
     }
 
-
+    //Dans l'idéal à mettre dans un fichier à part entière mais suffisant ici
     private class ViewHolder{
         TextView username;
         TextView message;

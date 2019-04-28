@@ -1,6 +1,5 @@
 package com.example.cesiapp;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,11 +9,7 @@ public class DateHelper {
     private static String format = "HH:mm:ss";
     private static SimpleDateFormat formatter = null;
 
-    /**
-     * create formatted date from timestamp.
-     * @param timestamp
-     * @return
-     */
+    //Renvoie un objet date à partir du timestamp
     public static String getFormattedDate(long timestamp){
         if(formatter == null){
             formatter = new SimpleDateFormat(format);

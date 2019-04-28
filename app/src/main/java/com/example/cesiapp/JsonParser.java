@@ -7,8 +7,6 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-//import cesi.com.tchatapp.model.Message;
-
 //Pour traiter les flux JSON que l'on reçoit de l'API
 public class JsonParser {
 

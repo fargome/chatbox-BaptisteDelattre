@@ -15,12 +15,6 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
 
-//import cesi.com.tchatapp.helper.JsonParser;
-//import cesi.com.tchatapp.helper.NetworkHelper;
-//import cesi.com.tchatapp.model.HttpResult;
-//import cesi.com.tchatapp.utils.Constants;
-
-
 //Login d'un utilisateur, il est déjà inscrit.
 public class SigninActivity extends Activity {
 
@@ -28,7 +22,6 @@ public class SigninActivity extends Activity {
     EditText pwd;
     ProgressBar pg;
     Button btn;
-
 
     @Override
     public void onCreate(Bundle savedInstance){
@@ -55,7 +48,6 @@ public class SigninActivity extends Activity {
                 startActivity(i);
             }
         });
-
     }
 
     //Barre de chargement, on l'affiche dans le cas où il y a un traitement en cours
@@ -79,7 +71,6 @@ public class SigninActivity extends Activity {
             this.context = context;
         }
 
-
         @Override
         protected String doInBackground(String... params) {
             //Vérification de la connexion internet avant l'envoi à l'api
@@ -93,7 +84,8 @@ public class SigninActivity extends Activity {
                 p.put("username", params[0]);
                 p.put("pwd", params[1]);
 
-                NetworkHelper.HttpResult result = NetworkHelper.doPost(context.getString(R.string.url_signin), p, null);
+                //On va taper sur l'API
+                HttpResult result = NetworkHelper.doPost(context.getString(R.string.url_signin), p, null);
 
                 if(result.code == 200) {
                     // Parse le JSON retourné en string
